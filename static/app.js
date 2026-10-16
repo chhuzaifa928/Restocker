@@ -430,6 +430,15 @@ async function refresh() {
 }
 
 // ---- wire up ------------------------------------------------------------
+// ---- theme toggle -------------------------------------------------------
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+  const next = cur === "light" ? "dark" : "light";
+  document.documentElement.setAttribute("data-theme", next);
+  try { localStorage.setItem("restock-theme", next); } catch (_) {}
+}
+
+$("#theme-btn").addEventListener("click", toggleTheme);
 $("#run-btn").addEventListener("click", runBatch);
 $("#add-form").addEventListener("submit", addSituation);
 $("#add-toggle").addEventListener("click", () => $("#add-form").classList.toggle("hidden"));

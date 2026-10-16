@@ -8,6 +8,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles.css" />
+  <script>
+    // Apply the saved (or system) theme before first paint to avoid a flash.
+    (function () {
+      try {
+        var t = localStorage.getItem("restock-theme");
+        if (!t) t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) { document.documentElement.setAttribute("data-theme", "dark"); }
+    })();
+  </script>
 </head>
 <body>
   <div class="bg-grid" aria-hidden="true"></div>
@@ -26,19 +36,25 @@
         <p>Human-governed autonomous purchasing officer</p>
       </div>
     </div>
-    <div class="status-pills">
-      <span id="model-pill" class="pill pill-muted" title="Pre-trained Q-table status">
-        <span class="dot"></span> <span class="pill-label">Model</span>
-      </span>
-      <span id="llm-pill" class="pill pill-muted" title="LLM explanation layer">
-        <span class="dot"></span> <span class="pill-label">LLM</span>
-      </span>
-      <span id="db-pill" class="pill pill-muted" title="SQLite persistence — state survives a redeploy">
-        <span class="dot"></span> <span class="pill-label">Store</span>
-      </span>
-      <span id="discord-pill" class="pill pill-muted" title="Discord approval notifications">
-        <span class="dot"></span> <span class="pill-label">Discord</span>
-      </span>
+    <div class="topbar-right">
+      <div class="status-pills">
+        <span id="model-pill" class="pill pill-muted" title="Pre-trained Q-table status">
+          <span class="dot"></span> <span class="pill-label">Model</span>
+        </span>
+        <span id="llm-pill" class="pill pill-muted" title="LLM explanation layer">
+          <span class="dot"></span> <span class="pill-label">LLM</span>
+        </span>
+        <span id="db-pill" class="pill pill-muted" title="SQLite persistence — state survives a redeploy">
+          <span class="dot"></span> <span class="pill-label">Store</span>
+        </span>
+        <span id="discord-pill" class="pill pill-muted" title="Discord approval notifications">
+          <span class="dot"></span> <span class="pill-label">Discord</span>
+        </span>
+      </div>
+      <button id="theme-btn" class="theme-btn" type="button" title="Toggle light / dark theme" aria-label="Toggle theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2 12h2.5M19.5 12H22M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
+      </button>
     </div>
   </header>
 
