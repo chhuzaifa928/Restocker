@@ -1,0 +1,580 @@
+{
+  "meta": {
+    "actions": [
+      "WAIT",
+      "BUY_SMALL",
+      "BUY_MEDIUM",
+      "BUY_LARGE"
+    ],
+    "visit_counts_included": true
+  },
+  "states": {
+    "LOW|LOW|LOW|LOW": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "LOW|LOW|LOW|MEDIUM": {
+      "WAIT": 3.0,
+      "BUY_SMALL": 10.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "LOW|LOW|LOW|HIGH": {
+      "WAIT": 3.0,
+      "BUY_SMALL": 10.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "LOW|LOW|MEDIUM|LOW": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "LOW|LOW|MEDIUM|MEDIUM": {
+      "WAIT": 3.0,
+      "BUY_SMALL": 10.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "LOW|LOW|MEDIUM|HIGH": {
+      "WAIT": 3.0,
+      "BUY_SMALL": 10.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "LOW|LOW|HIGH|LOW": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "LOW|LOW|HIGH|MEDIUM": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "LOW|LOW|HIGH|HIGH": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "LOW|MEDIUM|LOW|LOW": {
+      "WAIT": 3.0,
+      "BUY_SMALL": 10.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "LOW|MEDIUM|LOW|MEDIUM": {
+      "WAIT": 2.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 10.0,
+      "BUY_LARGE": 2.5,
+      "_visits": 28
+    },
+    "LOW|MEDIUM|LOW|HIGH": {
+      "WAIT": 2.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 10.0,
+      "BUY_LARGE": 2.5,
+      "_visits": 28
+    },
+    "LOW|MEDIUM|MEDIUM|LOW": {
+      "WAIT": 3.0,
+      "BUY_SMALL": 10.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "LOW|MEDIUM|MEDIUM|MEDIUM": {
+      "WAIT": 2.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 10.0,
+      "BUY_LARGE": 2.5,
+      "_visits": 28
+    },
+    "LOW|MEDIUM|MEDIUM|HIGH": {
+      "WAIT": 2.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 10.0,
+      "BUY_LARGE": 2.5,
+      "_visits": 2
+    },
+    "LOW|MEDIUM|HIGH|LOW": {
+      "WAIT": 3.0,
+      "BUY_SMALL": 10.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "LOW|MEDIUM|HIGH|MEDIUM": {
+      "WAIT": 3.0,
+      "BUY_SMALL": 10.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "LOW|MEDIUM|HIGH|HIGH": {
+      "WAIT": 9.5,
+      "BUY_SMALL": 10.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "LOW|HIGH|LOW|LOW": {
+      "WAIT": 2.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 10.0,
+      "BUY_LARGE": 2.5,
+      "_visits": 28
+    },
+    "LOW|HIGH|LOW|MEDIUM": {
+      "WAIT": 2.0,
+      "BUY_SMALL": 2.5,
+      "BUY_MEDIUM": 3.0,
+      "BUY_LARGE": 10.0,
+      "_visits": 28
+    },
+    "LOW|HIGH|LOW|HIGH": {
+      "WAIT": 2.0,
+      "BUY_SMALL": 2.5,
+      "BUY_MEDIUM": 3.0,
+      "BUY_LARGE": 10.0,
+      "_visits": 28
+    },
+    "LOW|HIGH|MEDIUM|LOW": {
+      "WAIT": 2.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 10.0,
+      "BUY_LARGE": 2.5,
+      "_visits": 28
+    },
+    "LOW|HIGH|MEDIUM|MEDIUM": {
+      "WAIT": 2.0,
+      "BUY_SMALL": 2.5,
+      "BUY_MEDIUM": 3.0,
+      "BUY_LARGE": 10.0,
+      "_visits": 28
+    },
+    "LOW|HIGH|MEDIUM|HIGH": {
+      "WAIT": 2.0,
+      "BUY_SMALL": 2.5,
+      "BUY_MEDIUM": 3.0,
+      "BUY_LARGE": 10.0,
+      "_visits": 28
+    },
+    "LOW|HIGH|HIGH|LOW": {
+      "WAIT": 2.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 10.0,
+      "BUY_LARGE": 2.5,
+      "_visits": 28
+    },
+    "LOW|HIGH|HIGH|MEDIUM": {
+      "WAIT": 2.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 10.0,
+      "BUY_LARGE": 2.5,
+      "_visits": 28
+    },
+    "LOW|HIGH|HIGH|HIGH": {
+      "WAIT": 2.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 10.0,
+      "BUY_LARGE": 2.5,
+      "_visits": 28
+    },
+    "MEDIUM|LOW|LOW|LOW": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|LOW|LOW|MEDIUM": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|LOW|LOW|HIGH": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|LOW|MEDIUM|LOW": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|LOW|MEDIUM|MEDIUM": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|LOW|MEDIUM|HIGH": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|LOW|HIGH|LOW": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|LOW|HIGH|MEDIUM": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|LOW|HIGH|HIGH": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|MEDIUM|LOW|LOW": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|MEDIUM|LOW|MEDIUM": {
+      "WAIT": 3.0,
+      "BUY_SMALL": 10.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|MEDIUM|LOW|HIGH": {
+      "WAIT": 3.0,
+      "BUY_SMALL": 10.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|MEDIUM|MEDIUM|LOW": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|MEDIUM|MEDIUM|MEDIUM": {
+      "WAIT": 3.0,
+      "BUY_SMALL": 10.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|MEDIUM|MEDIUM|HIGH": {
+      "WAIT": 3.0,
+      "BUY_SMALL": 10.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|MEDIUM|HIGH|LOW": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|MEDIUM|HIGH|MEDIUM": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|MEDIUM|HIGH|HIGH": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|HIGH|LOW|LOW": {
+      "WAIT": 3.0,
+      "BUY_SMALL": 10.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|HIGH|LOW|MEDIUM": {
+      "WAIT": 2.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 10.0,
+      "BUY_LARGE": 2.5,
+      "_visits": 28
+    },
+    "MEDIUM|HIGH|LOW|HIGH": {
+      "WAIT": 2.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 10.0,
+      "BUY_LARGE": 2.5,
+      "_visits": 28
+    },
+    "MEDIUM|HIGH|MEDIUM|LOW": {
+      "WAIT": 3.0,
+      "BUY_SMALL": 10.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|HIGH|MEDIUM|MEDIUM": {
+      "WAIT": 2.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 10.0,
+      "BUY_LARGE": 2.5,
+      "_visits": 28
+    },
+    "MEDIUM|HIGH|MEDIUM|HIGH": {
+      "WAIT": 2.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 10.0,
+      "BUY_LARGE": 2.5,
+      "_visits": 28
+    },
+    "MEDIUM|HIGH|HIGH|LOW": {
+      "WAIT": 3.0,
+      "BUY_SMALL": 10.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|HIGH|HIGH|MEDIUM": {
+      "WAIT": 3.0,
+      "BUY_SMALL": 10.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "MEDIUM|HIGH|HIGH|HIGH": {
+      "WAIT": 3.0,
+      "BUY_SMALL": 10.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|LOW|LOW|LOW": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|LOW|LOW|MEDIUM": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|LOW|LOW|HIGH": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|LOW|MEDIUM|LOW": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|LOW|MEDIUM|MEDIUM": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|LOW|MEDIUM|HIGH": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|LOW|HIGH|LOW": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|LOW|HIGH|MEDIUM": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|LOW|HIGH|HIGH": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|MEDIUM|LOW|LOW": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|MEDIUM|LOW|MEDIUM": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|MEDIUM|LOW|HIGH": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|MEDIUM|MEDIUM|LOW": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|MEDIUM|MEDIUM|MEDIUM": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|MEDIUM|MEDIUM|HIGH": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|MEDIUM|HIGH|LOW": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|MEDIUM|HIGH|MEDIUM": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|MEDIUM|HIGH|HIGH": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|HIGH|LOW|LOW": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|HIGH|LOW|MEDIUM": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|HIGH|LOW|HIGH": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|HIGH|MEDIUM|LOW": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|HIGH|MEDIUM|MEDIUM": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|HIGH|MEDIUM|HIGH": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|HIGH|HIGH|LOW": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|HIGH|HIGH|MEDIUM": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    },
+    "HIGH|HIGH|HIGH|HIGH": {
+      "WAIT": 10.0,
+      "BUY_SMALL": 3.0,
+      "BUY_MEDIUM": 2.5,
+      "BUY_LARGE": 2.0,
+      "_visits": 28
+    }
+  }
+}

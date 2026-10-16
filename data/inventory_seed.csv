@@ -1,0 +1,11 @@
+product_id,product_name,inventory_level,demand_forecast,unit_price,remaining_budget
+SKU-1001,Basmati Rice 5kg,30,120,10.0,30000
+SKU-1002,White Sugar 1kg,25,90,8.0,30000
+SKU-1003,All-Purpose Flour 10kg,90,150,12.0,30000
+SKU-1004,Table Salt 1kg,220,100,3.0,30000
+SKU-1005,Sunflower Oil 5L,35,160,14.0,30000
+SKU-1006,Olive Oil 1L,20,200,22.0,30000
+SKU-1007,Imported Arabica Coffee,45,140,26.0,30000
+SKU-1008,Seasonal Mango Pulp,30,150,19.0,30000
+SKU-1009,Bulk Diesel Generator,10,250,55.0,30000
+SKU-1010,Bottled Water 24pk,20,260,6.0,30000

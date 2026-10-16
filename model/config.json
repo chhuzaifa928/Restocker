@@ -1,0 +1,25 @@
+{
+  "median_inventory": 100.0,
+  "median_forecast": 150.0,
+  "median_price": 20.0,
+  "monthly_budget": 30000.0,
+  "thresholds": {
+    "ratio_low": 0.75,
+    "ratio_high": 1.25,
+    "budget_low": 0.33,
+    "budget_high": 0.67
+  },
+  "actions": [
+    "WAIT",
+    "BUY_SMALL",
+    "BUY_MEDIUM",
+    "BUY_LARGE"
+  ],
+  "action_multipliers": {
+    "WAIT": 0.0,
+    "BUY_SMALL": 0.5,
+    "BUY_MEDIUM": 1.0,
+    "BUY_LARGE": 2.0
+  },
+  "note": "Synthesised policy config (no training notebook in this build)."
+}
