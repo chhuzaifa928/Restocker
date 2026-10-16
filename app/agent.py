@@ -100,14 +100,18 @@ class Agent:
         ]
 
     # ---- decision + confidence (SRS 6.3) --------------------------------
-    def decide(self, state: List[str]) -> Tuple[str, float, int, Dict[str, float]]:
-        """Return (action, confidence, visits, q_values)."""
+    def decide(self, state: List[str]) -> Tuple[str, float, int, Dict[str, object]]:
+        """Return (action, confidence, visits, detail) where detail carries the
+        confidence breakdown: {margin, familiarity, q_values}."""
         key = "|".join(state)
         entry = self.q_table.get(key)
 
         if entry is None:
             # Unseen state: do nothing rather than guess (SRS 6.3 edge case).
-            return "WAIT", 0.0, 0, {a: 0.0 for a in self.actions}
+            return "WAIT", 0.0, 0, {
+                "margin": 0.0, "familiarity": 0.0,
+                "q_values": {a: 0.0 for a in self.actions},
+            }
 
         q_values = {a: float(entry.get(a, 0.0)) for a in self.actions}
         visits = int(entry.get("_visits", 0)) if self.visit_counts_included else None
@@ -128,7 +132,12 @@ class Agent:
             visits = self.settings.min_visits_familiar  # treat as "familiar"
 
         confidence = 0.7 * margin + 0.3 * familiarity
-        return action, round(confidence, 4), int(visits), q_values
+        detail = {
+            "margin": round(margin, 4),
+            "familiarity": round(familiarity, 4),
+            "q_values": q_values,
+        }
+        return action, round(confidence, 4), int(visits), detail
 
     def quantity_for(self, action: str, forecast: float) -> int:
         mult = self.multipliers.get(action, 0.0)

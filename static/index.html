@@ -33,6 +33,12 @@
       <span id="llm-pill" class="pill pill-muted" title="LLM explanation layer">
         <span class="dot"></span> <span class="pill-label">LLM</span>
       </span>
+      <span id="db-pill" class="pill pill-muted" title="SQLite persistence — state survives a redeploy">
+        <span class="dot"></span> <span class="pill-label">Store</span>
+      </span>
+      <span id="discord-pill" class="pill pill-muted" title="Discord approval notifications">
+        <span class="dot"></span> <span class="pill-label">Discord</span>
+      </span>
     </div>
   </header>
 
@@ -45,6 +51,8 @@
     <div class="metric metric-esc"><span class="metric-value num-anim" id="m-esc" data-val="0">0</span><span class="metric-label">Escalated</span></div>
     <div class="metric metric-pending"><span class="metric-value num-anim" id="m-pending" data-val="0">0</span><span class="metric-label">Pending</span></div>
     <div class="metric metric-low"><span class="metric-value num-anim" id="m-low" data-val="0">0</span><span class="metric-label">Low stock</span></div>
+    <div class="metric metric-po"><span class="metric-value num-anim" id="m-orders" data-val="0">0</span><span class="metric-label">POs issued</span></div>
+    <div class="metric metric-agree"><span class="metric-value num-anim" id="m-agree" data-val="0" data-suffix="%">0%</span><span class="metric-label">Human agreement</span></div>
     <div class="metric">
       <span class="metric-value num-anim" id="m-budget" data-val="0" data-money="1">$0</span>
       <span class="metric-label">Budget remaining</span>
@@ -76,7 +84,14 @@
     <section class="panel feed-panel">
       <div class="panel-head">
         <h2>Decision feed <span class="muted">· audit log</span></h2>
-        <button id="add-toggle" class="btn btn-ghost" type="button">+ Add situation</button>
+        <div class="head-actions">
+          <button id="export-btn" class="btn btn-ghost" type="button" title="Download the full audit log as CSV">⤓ CSV</button>
+          <button id="add-toggle" class="btn btn-ghost" type="button">+ Add situation</button>
+        </div>
+      </div>
+
+      <div class="preset-bar" id="preset-bar" aria-label="Demo scenarios">
+        <span class="preset-label">Try a scenario:</span>
       </div>
 
       <form id="add-form" class="add-form hidden" autocomplete="off">
@@ -101,6 +116,9 @@
         <span class="queue-count" id="queue-count">0</span>
       </div>
       <p class="panel-sub">Expensive, low-confidence, or unfamiliar orders the AI chose <em>not</em> to execute alone.</p>
+      <div class="gate-note" id="gate-note" title="Rejections raise the confidence bar so the gate escalates more cautiously (governance only — the Q-table is never retrained).">
+        Adaptive gate · confidence bar <b id="gate-eff">0.60</b> <span class="muted">(base <span id="gate-base">0.60</span>)</span>
+      </div>
       <div id="queue" class="queue">
         <div class="empty queue-empty" id="queue-empty">
           <div class="empty-icon" aria-hidden="true">✓</div>

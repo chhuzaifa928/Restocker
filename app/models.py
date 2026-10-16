@@ -31,6 +31,8 @@ class Decision(BaseModel):
     unit_price: float
     cost: float
     confidence: float
+    confidence_margin: float = 0.0        # how decisively the agent preferred its action
+    confidence_familiarity: float = 0.0   # how well-trained that state is
     route: str                       # AUTO_APPROVED | ESCALATED | BLOCKED
     reasons: List[str] = []
     rationale: str = ""
@@ -38,6 +40,9 @@ class Decision(BaseModel):
     status: str                      # PENDING | AUTO_APPROVED | HUMAN_APPROVED | HUMAN_REJECTED | BLOCKED
     human_decision: Optional[str] = None  # None | APPROVED | REJECTED
     budget_after: float = 0.0
+    po_number: Optional[str] = None       # set once an order is actually fulfilled
+    fulfillment: str = ""                 # "" | "local" | "webhook" | "webhook_failed"
+    notified: bool = False                # escalation pushed to Discord?
 
 
 class InventoryItem(BaseModel):
@@ -78,5 +83,10 @@ class Metrics(BaseModel):
     products_tracked: int = 0
     low_stock: int = 0
     units_replenished: int = 0
+    orders_filled: int = 0
+    agreement_rate: float = 0.0          # % of resolved escalations the human approved
+    override_rate: float = 0.0           # % the human rejected (overrode the AI)
+    effective_conf_threshold: float = 0.60
+    base_conf_threshold: float = 0.60
     model_loaded: bool
     llm_enabled: bool

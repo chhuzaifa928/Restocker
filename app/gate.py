@@ -39,7 +39,11 @@ class GateResult:
 
 
 def evaluate(action: str, quantity: int, cost: float, confidence: float,
-             visits: int, remaining_budget: float, settings: Settings) -> GateResult:
+             visits: int, remaining_budget: float, settings: Settings,
+             conf_threshold: float | None = None) -> GateResult:
+    # The human-feedback loop can raise the confidence bar above the configured
+    # default; fall back to the static setting when no override is supplied.
+    conf_threshold = settings.conf_threshold if conf_threshold is None else conf_threshold
     # 1. BLOCK — hard safety limits.
     block_reasons: List[str] = []
     if quantity > settings.max_order_qty:
@@ -59,7 +63,7 @@ def evaluate(action: str, quantity: int, cost: float, confidence: float,
     reasons: List[str] = []
     if cost > settings.auto_limit:
         reasons.append("cost_over_limit")
-    if confidence < settings.conf_threshold:
+    if confidence < conf_threshold:
         reasons.append("low_confidence")
     if visits < settings.min_visits_familiar:
         reasons.append("unfamiliar_state")

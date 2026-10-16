@@ -408,3 +408,49 @@ html, body {
   .toasts { left: 16px; right: 16px; }
   .toast { max-width: none; }
 }
+
+/* ===== v2.0 additions: presets, export, PO tags, adaptive gate ===== */
+
+/* panel-head action cluster */
+.head-actions { display: flex; gap: 8px; align-items: center; }
+
+/* new metric accents */
+.metric-po   .metric-value { color: var(--accent); }
+.metric-agree .metric-value { color: var(--green); }
+
+/* demo scenario presets */
+.preset-bar {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  padding: 2px 0 14px;
+}
+.preset-label { color: var(--text-mute); font-size: 12.5px; margin-right: 2px; }
+.preset-btn {
+  border: 1px solid var(--border); background: var(--surface-2); color: var(--text-dim);
+  padding: 6px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 600;
+  cursor: pointer; transition: transform .12s ease, border-color .12s ease, color .12s ease;
+}
+.preset-btn:hover { transform: translateY(-1px); color: var(--text); border-color: var(--brand); }
+.preset-btn:disabled { opacity: .5; cursor: default; transform: none; }
+.preset-routine  { border-left: 3px solid var(--green); }
+.preset-expensive { border-left: 3px solid var(--amber); }
+.preset-unfamiliar { border-left: 3px solid var(--brand-2); }
+.preset-blocked  { border-left: 3px solid var(--red); }
+
+/* purchase-order tag in the feed */
+.po-tag {
+  display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 6px;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .3px;
+  color: var(--accent); background: rgba(34, 211, 238, .12);
+  border: 1px solid rgba(34, 211, 238, .3); vertical-align: middle;
+}
+
+/* adaptive gate readout */
+.gate-note {
+  margin: -4px 0 12px; font-size: 12px; color: var(--text-mute);
+  padding: 6px 10px; border-radius: var(--radius-sm);
+  background: var(--surface-2); border: 1px solid var(--border-soft);
+  display: inline-block;
+}
+.gate-note b { color: var(--text-dim); }
+.gate-note.raised { border-color: var(--amber); color: var(--amber); }
+.gate-note.raised b { color: var(--amber); }

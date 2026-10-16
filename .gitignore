@@ -11,6 +11,11 @@ __pycache__/
 venv/
 env/
 
+# Local SQLite state (runtime, never commit)
+*.db
+*.db-wal
+*.db-shm
+
 # OS / editor
 .DS_Store
 Thumbs.db

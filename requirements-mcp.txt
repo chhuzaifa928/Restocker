@@ -1,0 +1,6 @@
+# MCP server extras — install ONLY when running mcp_server.py.
+# Kept out of requirements.txt so the web deployment (the mandatory one)
+# stays minimal and cannot be broken by the MCP SDK.
+-r requirements.txt
+# Code supports both SDK lines (FastMCP in 1.x, MCPServer in 2.x).
+mcp>=2.0,<3

@@ -61,6 +61,8 @@ function renderMetrics(m) {
   animateNumber($("#m-esc"), m.escalated);
   animateNumber($("#m-pending"), m.pending);
   animateNumber($("#m-low"), m.low_stock);
+  animateNumber($("#m-orders"), m.orders_filled || 0);
+  animateNumber($("#m-agree"), m.agreement_rate || 0, { suffix: "%" });
   animateNumber($("#m-budget"), m.budget_remaining, { money: true });
   const pct = m.initial_budget ? Math.max(0, Math.min(100, (m.budget_remaining / m.initial_budget) * 100)) : 0;
   $("#m-budget-bar").style.width = pct + "%";
@@ -76,25 +78,91 @@ function renderMetrics(m) {
   llm.className = "pill " + (m.llm_enabled ? "pill-ok" : "pill-warn");
   llm.querySelector(".pill-label").textContent = m.llm_enabled ? "LLM live" : "LLM fallback";
 
+  // adaptive gate readout (human-feedback loop)
+  if (m.effective_conf_threshold != null) {
+    $("#gate-eff").textContent = Number(m.effective_conf_threshold).toFixed(2);
+    $("#gate-base").textContent = Number(m.base_conf_threshold).toFixed(2);
+    const raised = m.effective_conf_threshold > m.base_conf_threshold + 1e-9;
+    $("#gate-note").classList.toggle("raised", raised);
+  }
+
   const b = $("#banner");
   if (!m.model_loaded) { b.textContent = "⚠ Model not loaded — decisions are unavailable until the Q-table is restored."; b.classList.remove("hidden"); }
   else b.classList.add("hidden");
+}
+
+// ---- integrations (static, from model-status) ---------------------------
+async function loadIntegrations() {
+  try {
+    const s = await fetch("/api/model-status").then((r) => r.json());
+    const ints = s.integrations || {};
+    const db = $("#db-pill");
+    db.className = "pill " + (ints.persistence ? "pill-ok" : "pill-muted");
+    db.querySelector(".pill-label").textContent = ints.persistence ? "Persisted" : "In-memory";
+    const dc = $("#discord-pill");
+    dc.className = "pill " + (ints.discord_notifications ? "pill-ok" : "pill-muted");
+    dc.querySelector(".pill-label").textContent = ints.discord_notifications ? "Discord on" : "Discord off";
+  } catch (_) {}
+}
+
+// ---- demo scenario presets ----------------------------------------------
+async function loadPresets() {
+  try {
+    const presets = await fetch("/api/presets").then((r) => r.json());
+    const bar = $("#preset-bar");
+    presets.forEach((p) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "preset-btn preset-" + p.key;
+      btn.textContent = p.label;
+      btn.title = p.hint;
+      btn.addEventListener("click", () => runPreset(p, btn));
+      bar.appendChild(btn);
+    });
+  } catch (_) {}
+}
+async function runPreset(p, btn) {
+  btn.disabled = true;
+  try {
+    const res = await fetch("/api/evaluate", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        product_id: "DEMO-" + p.key + "-" + Date.now(),
+        product_name: p.situation.product_name,
+        inventory_level: p.situation.inventory_level,
+        demand_forecast: p.situation.demand_forecast,
+        unit_price: p.situation.unit_price,
+      }),
+    });
+    if (!res.ok) throw new Error(await res.text());
+    const d = await res.json();
+    const where = d.route === "AUTO_APPROVED" ? "auto-executed" :
+                  d.route === "ESCALATED" ? "escalated for approval" : "blocked";
+    const po = d.po_number ? ` · ${d.po_number}` : "";
+    toast(`${d.product_name}: ${actionLabel(d.action)} ${d.quantity} → ${where}${po}`,
+          d.route === "AUTO_APPROVED" ? "ok" : d.route === "BLOCKED" ? "err" : "warn");
+    switchView("decisions");
+    await refresh();
+  } catch (e) { toast("Scenario failed: " + e.message, "err"); }
+  finally { btn.disabled = false; }
 }
 
 // ---- decision feed ------------------------------------------------------
 function decisionRow(d) {
   const [badgeClass, badgeText] = STATUS_BADGE[d.status] || ["badge-auto", d.status];
   const confPct = Math.round(d.confidence * 100);
+  const confTip = `margin ${(d.confidence_margin * 100 || 0).toFixed(0)}% · familiarity ${(d.confidence_familiarity * 100 || 0).toFixed(0)}%`;
+  const po = d.po_number ? `<span class="po-tag" title="Purchase order issued${d.fulfillment === "webhook" ? " · sent to webhook" : ""}">${escapeHtml(d.po_number)}</span>` : "";
   const row = document.createElement("div");
   row.className = "row";
   row.innerHTML = `
     <div class="row-product">
       <span class="row-name">${escapeHtml(d.product_name)}</span>
-      <span class="row-sub">${d.state.join(" · ")}</span>
+      <span class="row-sub">${d.state.join(" · ")} ${po}</span>
     </div>
     <div class="row-action">${actionLabel(d.action)}<small>${d.quantity} units</small></div>
     <div class="row-cost">${fmtMoney(d.cost)}</div>
-    <div class="conf">
+    <div class="conf" title="${confTip}">
       <div class="conf-top"><span>confidence</span><span>${confPct}%</span></div>
       <div class="conf-track"><div class="conf-fill" style="width:${confPct}%;background:${confColor(d.confidence)}"></div></div>
     </div>
@@ -162,9 +230,12 @@ async function resolve(d, act, card) {
   try {
     const res = await fetch(`/api/decisions/${d.id}/${act}`, { method: "POST" });
     if (!res.ok) throw new Error(await res.text());
+    const updated = await res.json().catch(() => ({}));
     card.classList.add("leaving");
-    if (act === "approve") toast(`Approved · ${d.product_name} (${d.quantity} units, ${fmtMoney(d.cost)})`, "ok");
-    else toast(`Rejected · ${d.product_name} voided`, "warn");
+    if (act === "approve") {
+      const po = updated.po_number ? ` · PO ${updated.po_number}` : "";
+      toast(`Approved · ${d.product_name} (${d.quantity} units, ${fmtMoney(d.cost)})${po}`, "ok");
+    } else toast(`Rejected · ${d.product_name} voided`, "warn");
     setTimeout(() => {
       card.remove(); resolving.delete(d.id); refresh();
       if (!$("#queue").querySelector(".card")) $("#queue-empty").classList.remove("hidden");
@@ -362,7 +433,10 @@ async function refresh() {
 $("#run-btn").addEventListener("click", runBatch);
 $("#add-form").addEventListener("submit", addSituation);
 $("#add-toggle").addEventListener("click", () => $("#add-form").classList.toggle("hidden"));
+$("#export-btn").addEventListener("click", () => { window.location.href = "/api/decisions.csv"; });
 $$(".tab").forEach((t) => t.addEventListener("click", () => switchView(t.dataset.view)));
 
+loadIntegrations();
+loadPresets();
 refresh();
 setInterval(refresh, 2500);

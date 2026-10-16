@@ -49,6 +49,15 @@ class Settings:
     llm_model: str = os.getenv("LLM_MODEL", "").strip()
     llm_timeout: float = _f("LLM_TIMEOUT", 5.0)
 
+    # Integrations: escalation notifications + order fulfillment.
+    notify_discord_webhook_url: str = os.getenv("NOTIFY_DISCORD_WEBHOOK_URL", "").strip()
+    purchase_order_webhook_url: str = os.getenv("PURCHASE_ORDER_WEBHOOK_URL", "").strip()
+    public_base_url: str = os.getenv("PUBLIC_BASE_URL", "").strip().rstrip("/")
+    webhook_timeout: float = _f("WEBHOOK_TIMEOUT", 5.0)
+
+    # Persistence. Empty DB_PATH disables SQLite (pure in-memory, MVP mode).
+    db_path: str = os.getenv("DB_PATH", str(DATA_DIR / "restock.db")).strip()
+
     # Paths.
     q_table_path: Path = MODEL_DIR / "q_table.json"
     config_path: Path = MODEL_DIR / "config.json"
@@ -57,6 +66,18 @@ class Settings:
     @property
     def llm_enabled(self) -> bool:
         return bool(self.llm_api_key)
+
+    @property
+    def discord_enabled(self) -> bool:
+        return bool(self.notify_discord_webhook_url)
+
+    @property
+    def fulfillment_enabled(self) -> bool:
+        return bool(self.purchase_order_webhook_url)
+
+    @property
+    def persistence_enabled(self) -> bool:
+        return bool(self.db_path)
 
 
 settings = Settings()

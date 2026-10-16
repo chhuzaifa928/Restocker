@@ -10,6 +10,23 @@ for each escalation — it *explains*, it does not *decide*.
 
 Built from `ReStock_AI_SRS.md` (SRS v1.0).
 
+### New in v2.0 — the agent does real work, across real tools
+- **Discord approval notifications.** Every escalation is pushed to a Discord
+  (or Slack-compatible) webhook with the AI's rationale and **one-click
+  Approve / Reject links** — a manager can sign off a purchase order from their
+  phone, not just the dashboard.
+- **Real order fulfillment.** Executed orders (auto-approved or human-approved)
+  raise a **purchase order** (PO number + receipt) and optionally POST it to a
+  downstream webhook (supplier intake, a Google Sheet, n8n/Zapier …).
+- **SQLite persistence.** Decisions, budget and feedback survive a redeploy.
+- **Human-feedback loop (adaptive gate).** Approvals/rejections are recorded as
+  agreement/override; a run of rejections *raises* the confidence bar so the
+  gate escalates more cautiously. Governance only — the Q-table is never retrained.
+- **MCP server.** `mcp_server.py` exposes the live service as Model Context
+  Protocol tools, so any MCP client (e.g. Claude Desktop) can drive it.
+- **Demo polish.** Scenario preset buttons, a one-click CSV audit-log export,
+  per-decision confidence breakdown (margin vs familiarity) and live PO numbers.
+
 ### Dashboard
 Two tabbed views with live polling, animated counters, and toast notifications:
 - **Decisions** — the audit-log feed + the human approval queue (the hero panel).
@@ -78,7 +95,10 @@ agent preferred its action and *familiarity* is how well-trained that state is.
 | GET  | `/api/inventory` | Live per-product stock positions + status |
 | POST | `/api/inventory/{id}/reorder` | Evaluate one product at its current stock |
 | POST | `/api/inventory/{id}/adjust` | Manual stock correction (`{delta}` or `{level}`) |
-| GET  | `/api/model-status` | Model/LLM/constants (diagnostics) |
+| GET  | `/api/model-status` | Model/LLM/integrations/constants (diagnostics) |
+| GET  | `/api/decisions.csv` | Download the full audit log as CSV |
+| GET  | `/api/presets` | Demo scenario presets (auto / escalate / block) |
+| GET  | `/a/{id}` · `/r/{id}` | One-click Approve / Reject (used by Discord links) |
 
 ---
 
@@ -86,9 +106,45 @@ agent preferred its action and *familiarity* is how well-trained that state is.
 
 ```
 app/        FastAPI service, agent, dual gate, LLM layer, store, schemas
+  db.py       SQLite persistence (state survives a redeploy)
+  fulfill.py  purchase-order fulfillment (PO number + optional webhook)
+  notify.py   Discord/Slack escalation notifications + approve/reject links
 model/      q_table.json + config.json  (pre-trained artifacts; inference only)
 data/       inventory_seed.csv          (demo situations: all three routes)
 static/     index.html, app.js, styles.css  (single-page dashboard)
+mcp_server.py      MCP server (separate process; see requirements-mcp.txt)
+requirements-mcp.txt   MCP extras — kept out of the web deploy on purpose
+```
+
+---
+
+## Integrations (all optional — the app runs fully without any of them)
+
+Set these as environment variables on Alternate Clouds (never commit real
+values). See `.env.example` for the full list.
+
+| Variable | Effect |
+|---|---|
+| `DB_PATH` | SQLite file for persistence (empty = pure in-memory MVP mode) |
+| `NOTIFY_DISCORD_WEBHOOK_URL` | Push escalations to Discord with Approve/Reject links |
+| `PURCHASE_ORDER_WEBHOOK_URL` | POST a PO receipt downstream on every executed order |
+| `PUBLIC_BASE_URL` | Your deployed URL — makes the Discord Approve/Reject links absolute |
+
+Every integration degrades gracefully: a missing or failing webhook never
+breaks a decision, voids an order, or crashes the service.
+
+### MCP server (Model Context Protocol)
+
+`mcp_server.py` exposes the live service as MCP tools (`evaluate_reorder`,
+`list_pending`, `approve_order`, `reject_order`, `get_metrics`,
+`get_inventory`, `run_batch`). It talks to the running API over HTTP, so an
+approval made through MCP affects the *same* system as the dashboard and the
+Discord links. It is deliberately **not** part of `requirements.txt` so it can
+never jeopardise the mandatory web deployment.
+
+```bash
+pip install -r requirements-mcp.txt
+RESTOCK_API_URL=https://your-app.on-alternate-clouds python mcp_server.py
 ```
 
 ---
