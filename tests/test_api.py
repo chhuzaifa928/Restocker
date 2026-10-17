@@ -58,13 +58,14 @@ def test_double_resolve_conflicts(client):
 
 def test_persistence_survives_reload(client, tmp_path):
     client.post("/api/run-batch")
+    products = len(client.get("/api/inventory").json())
     before = client.get("/api/metrics").json()["total_decisions"]
     # New app instance, same DB_PATH -> state should rehydrate.
     import app.main as main
     importlib.reload(main)
     with TestClient(main.app) as c2:
         after = c2.get("/api/metrics").json()["total_decisions"]
-    assert after == before and before == 10
+    assert after == before and before == products
 
 
 def test_ingest_updates_forecast_and_reevaluates(client):

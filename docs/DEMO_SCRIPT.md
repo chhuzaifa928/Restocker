@@ -23,7 +23,7 @@ Every beat below names the rubric criterion it scores.*
 
 ### 1:15 – 2:30 · Live decision run *(Technical execution + UX)*
 1. Click **Run batch**.
-2. Point to the metrics animating: *"5 auto-approved, 3 escalated, 2 blocked — the agent cleared the routine volume in one click."*
+2. Point to the metrics animating: *"Across 30 products it auto-approved 21, escalated 6, and blocked 3 — the agent cleared the routine volume in one click."*
 3. Point to a **BLOCKED** row: *"This generator order is over our hard ceiling — the AI refused to spend it."*
 4. Point to the **confidence bars** and an escalation's **rationale**: *"The LLM explains each escalation in plain English — but it never makes the decision; the Q-table does."*
 

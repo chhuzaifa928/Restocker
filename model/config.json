@@ -2,7 +2,7 @@
   "median_inventory": 100.0,
   "median_forecast": 150.0,
   "median_price": 20.0,
-  "monthly_budget": 30000.0,
+  "monthly_budget": 120000.0,
   "thresholds": {
     "ratio_low": 0.75,
     "ratio_high": 1.25,

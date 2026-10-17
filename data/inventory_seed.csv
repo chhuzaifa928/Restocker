@@ -1,11 +1,31 @@
 product_id,product_name,inventory_level,demand_forecast,unit_price,remaining_budget
-SKU-1001,Basmati Rice 5kg,30,120,10.0,30000
-SKU-1002,White Sugar 1kg,25,90,8.0,30000
-SKU-1003,All-Purpose Flour 10kg,90,150,12.0,30000
-SKU-1004,Table Salt 1kg,220,100,3.0,30000
-SKU-1005,Sunflower Oil 5L,35,160,14.0,30000
-SKU-1006,Olive Oil 1L,20,200,22.0,30000
-SKU-1007,Imported Arabica Coffee,45,140,26.0,30000
-SKU-1008,Seasonal Mango Pulp,30,150,19.0,30000
-SKU-1009,Bulk Diesel Generator,10,250,55.0,30000
-SKU-1010,Bottled Water 24pk,20,260,6.0,30000
+SKU-1001,Basmati Rice 5kg,30,120,10.0,120000
+SKU-1002,White Sugar 1kg,25,90,8.0,120000
+SKU-1003,All-Purpose Flour 10kg,90,150,12.0,120000
+SKU-1004,Table Salt 1kg,220,100,3.0,120000
+SKU-1005,Sunflower Oil 5L,35,160,14.0,120000
+SKU-1006,Olive Oil 1L,20,200,22.0,120000
+SKU-1007,Imported Arabica Coffee,45,140,26.0,120000
+SKU-1008,Seasonal Mango Pulp,30,150,19.0,120000
+SKU-1009,Bulk Diesel Generator,10,250,55.0,120000
+SKU-1010,Bottled Water 24pk,20,260,6.0,120000
+SKU-1011,Green Tea 100 Bags,60,110,9.0,120000
+SKU-1012,Black Pepper 200g,40,70,13.0,120000
+SKU-1013,Dish Soap 1L,130,120,5.0,120000
+SKU-1014,Laundry Detergent 5kg,55,130,16.0,120000
+SKU-1015,Paper Towels 6pk,80,140,7.0,120000
+SKU-1016,Toothpaste 150ml,95,160,4.0,120000
+SKU-1017,Shampoo 400ml,48,120,11.0,120000
+SKU-1018,Canned Tomatoes 400g,150,170,2.0,120000
+SKU-1019,Durum Pasta 1kg,70,150,6.0,120000
+SKU-1020,Breakfast Cereal 500g,38,130,12.0,120000
+SKU-1021,Orange Juice 1L,42,180,9.0,120000
+SKU-1022,Energy Drink 250ml,60,220,3.0,120000
+SKU-1023,Instant Noodles 70g,200,240,1.5,120000
+SKU-1024,Frozen Peas 1kg,33,100,8.0,120000
+SKU-1025,Butter 500g,28,110,15.0,120000
+SKU-1026,Cheddar Cheese 1kg,25,120,28.0,120000
+SKU-1027,Premium Olive Oil 2L,18,90,42.0,120000
+SKU-1028,Dark Chocolate 100g,90,140,7.0,120000
+SKU-1029,Organic Honey 500g,50,100,24.0,120000
+SKU-1030,Commercial Freezer Unit,6,130,90.0,120000
