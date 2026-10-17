@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  @page { size: A4; margin: 16mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Helvetica Neue", Arial, sans-serif; color: #16203a; margin: 0; font-size: 12px; line-height: 1.5; }
+  h1 { font-size: 30px; margin: 0 0 4px; letter-spacing: -0.5px; }
+  h2 { font-size: 16px; margin: 20px 0 8px; color: #4338ca; border-bottom: 2px solid #e5eaf2; padding-bottom: 4px; }
+  h3 { font-size: 13px; margin: 12px 0 4px; }
+  p { margin: 6px 0; }
+  .tagline { font-size: 14px; color: #475569; margin: 0 0 14px; }
+  .badge { display: inline-block; background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; border-radius: 999px; padding: 3px 10px; font-size: 11px; font-weight: 700; margin-right: 6px; }
+  .fill { background: #fff7ed; border: 1px dashed #fb923c; color: #9a3412; border-radius: 4px; padding: 1px 6px; font-weight: 700; }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+  th, td { border: 1px solid #d7deea; padding: 6px 9px; text-align: left; vertical-align: top; font-size: 11.5px; }
+  th { background: #f1f5f9; font-weight: 700; }
+  ul { margin: 6px 0; padding-left: 18px; }
+  li { margin: 3px 0; }
+  a { color: #4338ca; text-decoration: none; word-break: break-all; }
+  .links td:first-child { white-space: nowrap; font-weight: 700; width: 130px; }
+  .hero { width: 100%; border: 1px solid #d7deea; border-radius: 8px; margin: 6px 0; }
+  .two { display: flex; gap: 8px; }
+  .two img { width: 50%; border: 1px solid #d7deea; border-radius: 8px; }
+  .muted { color: #64748b; font-size: 10.5px; }
+  .pagebreak { page-break-before: always; }
+  .card { background: #f8fafc; border: 1px solid #e5eaf2; border-radius: 8px; padding: 10px 12px; margin: 8px 0; }
+  .center { text-align: center; }
+</style>
+</head>
+<body>
+
+  <h1>🛒 ReStock AI</h1>
+  <p class="tagline"><strong>A Human-Governed Autonomous Purchasing Officer</strong> — the AI handles the volume, the human owns the judgment.</p>
+  <span class="badge">Agentika 2.0 · NaSCon 2026</span>
+  <span class="badge">Theme: Human + AI — Better Together</span>
+  <span class="badge">Deployed on Clouds by Alternate Futures</span>
+
+  <h2>Team &amp; submission details</h2>
+  <table class="links">
+    <tr><td>Team name</td><td><span class="fill">[ FILL: Your team name ]</span></td></tr>
+    <tr><td>Member 1</td><td><span class="fill">[ FILL: Full name ]</span> &nbsp;·&nbsp; phone &amp; CNIC provided in the Google Form</td></tr>
+    <tr><td>Member 2</td><td><span class="fill">[ FILL: Full name ]</span> &nbsp;·&nbsp; phone &amp; CNIC provided in the Google Form</td></tr>
+    <tr><td>Live deployment</td><td><a href="https://alternate-restless-forest-3113-github-app.alternatefutures.ai">https://alternate-restless-forest-3113-github-app.alternatefutures.ai</a></td></tr>
+    <tr><td>Source code</td><td><a href="https://github.com/chhuzaifa928/Restocker">https://github.com/chhuzaifa928/Restocker</a></td></tr>
+    <tr><td>Demo video (2–3 min)</td><td><span class="fill">[ FILL: Unlisted YouTube / Google Drive "Anyone with the link" URL ]</span></td></tr>
+  </table>
+  <p class="muted">Please verify this link opens in an incognito window before submitting. No API keys or passwords appear anywhere in this document or the repository.</p>
+
+  <h2>The problem</h2>
+  <p>Distributors make thousands of restock decisions every week. <strong>Automate all of them</strong> and a single mispriced or oversized order burns the budget. <strong>Do them by hand</strong> and the team drowns in routine approvals. Neither extreme is acceptable — the routine volume needs automation, but the risky calls need human judgment.</p>
+
+  <h2>The solution</h2>
+  <p>ReStock AI is an AI-driven replenishment officer. A pre-trained <strong>Q-Learning agent</strong> decides how much to reorder for each product, and a <strong>dual safety gate</strong> routes every decision one of three ways:</p>
+  <ul>
+    <li>✅ <strong>Auto-execute</strong> — routine, confident, affordable orders run without a human.</li>
+    <li>🛎️ <strong>Escalate to a human</strong> — expensive, low-confidence or unfamiliar orders are queued for one-click approval, with a plain-English rationale written by an LLM.</li>
+    <li>⛔ <strong>Block</strong> — orders over the quantity cap, cost ceiling or remaining budget are refused outright.</li>
+  </ul>
+  <div class="card"><strong>Where the human steps in:</strong> escalated orders wait in the approval queue (and are pushed to Discord with Approve/Reject links). A human approves or rejects; approval issues a real purchase order, rejection voids it <em>and</em> makes the gate more cautious. <strong>The LLM only explains — it never decides.</strong></div>
+
+  <h2>How it works</h2>
+  <img class="hero" src="file:///home/user/Restocker/docs/architecture.svg" alt="Architecture">
+
+  <div class="pagebreak"></div>
+  <h2>Key features</h2>
+  <table>
+    <tr><th>Capability</th><th>What it does</th></tr>
+    <tr><td>Q-Learning agent</td><td>Encodes each situation into a 4-D state and selects the reorder action (inference only; explainable policy).</td></tr>
+    <tr><td>Dual safety gate</td><td>Auto-execute / escalate / block, with a hard budget guard.</td></tr>
+    <tr><td>Human-in-the-loop</td><td>Approval queue on the dashboard + Discord approve/reject links (approve from your phone).</td></tr>
+    <tr><td>Real fulfillment</td><td>Executed orders raise a purchase order (PO number + receipt), optionally POSTed to a downstream webhook.</td></tr>
+    <tr><td>Adaptive governance</td><td>Human rejections raise the confidence bar so the gate escalates sooner — governance only, the model is never retrained.</td></tr>
+    <tr><td>Reactive ingestion</td><td>A demand signal (external feed or mock) auto-triggers re-evaluation: new demand → decision.</td></tr>
+    <tr><td>Persistence</td><td>SQLite keeps decisions, budget and feedback alive across a redeploy.</td></tr>
+    <tr><td>MCP server</td><td>The same live service is driveable from any MCP client (e.g. Claude Desktop).</td></tr>
+    <tr><td>Polished UX</td><td>Light/dark dashboard, live counters, scenario presets, CSV audit export; 24 automated tests.</td></tr>
+  </table>
+
+  <h2>Technology</h2>
+  <p><strong>Backend:</strong> Python 3.11 · FastAPI · Pydantic · httpx &nbsp;|&nbsp; <strong>Agent:</strong> Q-Learning policy over 81 discretised states &nbsp;|&nbsp; <strong>Storage:</strong> SQLite &nbsp;|&nbsp; <strong>Frontend:</strong> vanilla HTML/CSS/JS single-page dashboard (themeable) &nbsp;|&nbsp; <strong>Integrations:</strong> Discord/Slack webhooks, purchase-order webhook, Model Context Protocol &nbsp;|&nbsp; <strong>Deploy:</strong> Docker on Clouds by Alternate Futures (GitHub repo → container, $PORT-aware).</p>
+
+  <h2>How it meets the judging rubric</h2>
+  <table>
+    <tr><th>Criterion</th><th>In ReStock AI</th></tr>
+    <tr><td>Technical execution &amp; reliability</td><td>End-to-end working, graceful degradation everywhere, persistence, 24 passing tests.</td></tr>
+    <tr><td>Usefulness &amp; real-world impact</td><td>Real replenishment problem, budget control, actual purchase-order output.</td></tr>
+    <tr><td>Theme alignment</td><td>Human + AI: the AI auto-handles volume; the human approves the risky orders.</td></tr>
+    <tr><td>Creativity &amp; uniqueness</td><td>Dual gate + adaptive governance + reactive ingestion; the LLM explains, not decides.</td></tr>
+    <tr><td>Automation depth &amp; integration</td><td>Discord approvals + fulfillment webhook + MCP server + demand ingestion.</td></tr>
+    <tr><td>User experience &amp; presentation</td><td>Clean light/dark dashboard, live metrics, toasts, one-click demo scenarios.</td></tr>
+  </table>
+
+  <div class="pagebreak"></div>
+  <h2>Screenshots</h2>
+  <p class="muted">Decisions view (dark theme) — audit-log feed + human approval queue.</p>
+  <img class="hero" src="file:///home/user/Restocker/docs/dashboard-dark.png" alt="Dashboard dark">
+  <p class="muted">Inventory view (light theme) — live stock positions; executed orders replenish stock.</p>
+  <img class="hero" src="file:///home/user/Restocker/docs/dashboard-light.png" alt="Dashboard light">
+
+  <h2>An honest note on the model</h2>
+  <p>The Q-table in this build is a <strong>synthesised, explainable policy</strong> covering all 81 states — not a trained one — and it is a drop-in artifact: a notebook-exported Q-table with the same schema plugs in unchanged. The feedback loop adapts the <em>gate</em>, never the learned values, and the LLM only writes rationales. We chose explainability and a reliable live demo, and we are transparent about it.</p>
+
+  <p class="center muted" style="margin-top:24px;">ReStock AI · Agentika 2.0 (NaSCon 2026) · Human + AI: Better Together</p>
+
+</body>
+</html>
