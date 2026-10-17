@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Inter, Segoe UI, system-ui, sans-serif" role="img" aria-label="ReStock AI architecture">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .card{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.5;rx:12;}
+      .t{fill:#0f172a;font-size:14px;font-weight:700;}
+      .s{fill:#475569;font-size:11px;}
+      .lbl{fill:#64748b;font-size:10.5px;font-weight:600;}
+      .edge{stroke:#64748b;stroke-width:1.6;fill:none;}
+      .edge-d{stroke:#94a3b8;stroke-width:1.4;fill:none;stroke-dasharray:4 4;}
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="960" height="560" fill="#f1f5f9" rx="16"/>
+  <text x="28" y="40" fill="#0f172a" font-size="20" font-weight="800">ReStock AI — human-governed purchasing pipeline</text>
+  <text x="28" y="62" class="s">AI handles the volume · the human owns the judgment · the LLM explains, it does not decide</text>
+
+  <!-- inputs -->
+  <rect x="28" y="96" width="170" height="70" rx="12" class="card"/>
+  <text x="44" y="124" class="t">Demand signal</text>
+  <text x="44" y="143" class="s">external feed / mock</text>
+  <text x="44" y="158" class="s">POST /api/ingest</text>
+
+  <rect x="28" y="190" width="170" height="70" rx="12" class="card"/>
+  <text x="44" y="218" class="t">Operator input</text>
+  <text x="44" y="237" class="s">run-batch · evaluate</text>
+  <text x="44" y="252" class="s">reorder · adjust stock</text>
+
+  <!-- agent -->
+  <rect x="250" y="140" width="190" height="86" rx="12" class="card" stroke="#6366f1"/>
+  <text x="266" y="168" class="t">Q-Learning agent</text>
+  <text x="266" y="187" class="s">encode state (4-D)</text>
+  <text x="266" y="203" class="s">argmax action (ε=0)</text>
+  <text x="266" y="219" class="s">confidence = margin+fam</text>
+
+  <!-- gate -->
+  <rect x="492" y="140" width="150" height="86" rx="12" class="card" stroke="#f59e0b"/>
+  <text x="508" y="168" class="t">Dual gate</text>
+  <text x="508" y="187" class="s">block / wait /</text>
+  <text x="508" y="203" class="s">escalate / auto</text>
+  <text x="508" y="219" class="s">+ budget guard</text>
+
+  <!-- three routes -->
+  <rect x="716" y="70" width="216" height="64" rx="12" class="card" stroke="#22c55e"/>
+  <text x="732" y="97" class="t">✅ Auto-execute</text>
+  <text x="732" y="116" class="s">routine, confident, affordable</text>
+
+  <rect x="716" y="150" width="216" height="76" rx="12" class="card" stroke="#f59e0b"/>
+  <text x="732" y="177" class="t">🛎️ Escalate → human</text>
+  <text x="732" y="196" class="s">LLM writes the rationale</text>
+  <text x="732" y="212" class="s">Dashboard + Discord approve/reject</text>
+
+  <rect x="716" y="242" width="216" height="52" rx="12" class="card" stroke="#ef4444"/>
+  <text x="732" y="269" class="t">⛔ Block</text>
+  <text x="732" y="285" class="s">over cap / ceiling / budget</text>
+
+  <!-- fulfillment -->
+  <rect x="716" y="330" width="216" height="76" rx="12" class="card" stroke="#0891b2"/>
+  <text x="732" y="357" class="t">🧾 Fulfillment</text>
+  <text x="732" y="376" class="s">purchase order (PO + receipt)</text>
+  <text x="732" y="392" class="s">optional webhook · replenish stock</text>
+
+  <!-- feedback -->
+  <rect x="492" y="330" width="190" height="76" rx="12" class="card" stroke="#8b5cf6"/>
+  <text x="508" y="357" class="t">🔁 Human feedback</text>
+  <text x="508" y="376" class="s">approve = agreement</text>
+  <text x="508" y="392" class="s">reject ⇒ raise conf. bar</text>
+
+  <!-- persistence + mcp -->
+  <rect x="250" y="330" width="190" height="76" rx="12" class="card"/>
+  <text x="266" y="357" class="t">💾 SQLite store</text>
+  <text x="266" y="376" class="s">decisions · budget</text>
+  <text x="266" y="392" class="s">inventory · feedback</text>
+
+  <rect x="250" y="440" width="682" height="60" rx="12" class="card" stroke="#6366f1"/>
+  <text x="266" y="466" class="t">🔌 MCP server &amp; REST API</text>
+  <text x="266" y="485" class="s">same live system, many front doors: dashboard · Discord links · MCP tools (evaluate / approve / metrics)</text>
+
+  <!-- edges -->
+  <path class="edge" d="M198 131 L250 170" marker-end="url(#arrow)"/>
+  <path class="edge" d="M198 225 L250 190" marker-end="url(#arrow)"/>
+  <path class="edge" d="M440 183 L492 183" marker-end="url(#arrow)"/>
+  <path class="edge" d="M642 170 L716 104" marker-end="url(#arrow)"/>
+  <path class="edge" d="M642 185 L716 188" marker-end="url(#arrow)"/>
+  <path class="edge" d="M642 205 L716 266" marker-end="url(#arrow)"/>
+  <path class="edge" d="M824 134 L824 150" marker-end="url(#arrow)"/>
+  <path class="edge" d="M824 226 L824 330" marker-end="url(#arrow)"/>
+  <text x="834" y="320" class="lbl">on approve</text>
+  <!-- escalate -> feedback -->
+  <path class="edge-d" d="M716 200 Q690 300 682 356" marker-end="url(#arrow)"/>
+  <!-- feedback -> gate (raise threshold) -->
+  <path class="edge-d" d="M567 330 Q560 270 567 226" marker-end="url(#arrow)"/>
+  <text x="575" y="300" class="lbl">adapts gate</text>
+  <!-- store underpins -->
+  <path class="edge-d" d="M345 226 L345 330" marker-end="url(#arrow)"/>
+</svg>

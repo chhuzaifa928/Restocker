@@ -27,6 +27,7 @@ from .gate import ROUTE_AUTO, ROUTE_BLOCK, ROUTE_ESCALATE, evaluate
 from .llm import generate_rationale
 from .models import AdjustRequest, Decision, InventoryItem, Metrics, Situation
 from .notify import notify_escalation
+from .signals import fetch_demand_signals
 from .store import Store
 
 agent = Agent(settings)
@@ -204,6 +205,31 @@ async def evaluate_one(sit: Situation, request: Request) -> Decision:
     if not agent.loaded:
         raise HTTPException(503, "Model not loaded")
     return await _process(sit, request=request)
+
+
+@app.post("/api/ingest")
+async def ingest(request: Request) -> dict:
+    """Pull fresh demand signals (external endpoint or built-in mock feed),
+    update the affected products' forecasts, and let the agent re-evaluate them
+    automatically — a closed reactive loop: new demand → decision."""
+    if not agent.loaded:
+        raise HTTPException(503, "Model not loaded")
+    signals = await fetch_demand_signals(store.inventory(), settings)
+    decisions: List[Decision] = []
+    for s in signals:
+        p = store.update_forecast(s["product_id"], s["demand_forecast"])
+        if p is None:
+            continue
+        sit = Situation(
+            product_id=p["product_id"],
+            product_name=p["product_name"],
+            inventory_level=p["inventory_level"],
+            demand_forecast=p["demand_forecast"],
+            unit_price=p["unit_price"],
+        )
+        decisions.append(await _process(sit, request=request))
+    source = signals[0]["source"] if signals else "none"
+    return {"source": source, "signals": signals, "decisions": decisions}
 
 
 @app.get("/api/decisions", response_model=List[Decision])

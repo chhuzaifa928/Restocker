@@ -58,6 +58,11 @@ class Settings:
     # Persistence. Empty DB_PATH disables SQLite (pure in-memory, MVP mode).
     db_path: str = os.getenv("DB_PATH", str(DATA_DIR / "restock.db")).strip()
 
+    # Demand-signal ingestion. If set, POST /api/ingest pulls fresh demand
+    # numbers from this JSON endpoint; otherwise a built-in mock sales feed is
+    # used so the reactive loop is demonstrable with zero configuration.
+    demand_signal_url: str = os.getenv("DEMAND_SIGNAL_URL", "").strip()
+
     # Paths.
     q_table_path: Path = MODEL_DIR / "q_table.json"
     config_path: Path = MODEL_DIR / "config.json"

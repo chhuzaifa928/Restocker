@@ -375,6 +375,30 @@ async function runBatch() {
     btn.querySelector(".btn-text").textContent = "Run batch";
   }
 }
+async function ingestDemand() {
+  const btn = $("#ingest-btn");
+  btn.disabled = true;
+  btn.querySelector(".btn-spinner").classList.remove("hidden");
+  btn.querySelector(".btn-text").textContent = "Ingesting…";
+  try {
+    const res = await fetch("/api/ingest", { method: "POST" });
+    if (!res.ok) throw new Error(await res.text());
+    const data = await res.json();
+    const ds = data.decisions || [];
+    const auto = ds.filter((d) => d.route === "AUTO_APPROVED").length;
+    const esc = ds.filter((d) => d.route === "ESCALATED").length;
+    const blk = ds.filter((d) => d.route === "BLOCKED").length;
+    toast(`📡 ${data.source} signal · ${ds.length} products re-evaluated · ${auto} auto · ${esc} escalated · ${blk} blocked`,
+          esc || blk ? "warn" : "ok", 4200);
+    switchView("decisions");
+    await refresh();
+  } catch (e) { toast("Ingest failed: " + e.message, "err"); }
+  finally {
+    btn.disabled = false;
+    btn.querySelector(".btn-spinner").classList.add("hidden");
+    btn.querySelector(".btn-text").textContent = "📡 Ingest demand";
+  }
+}
 async function addSituation(ev) {
   ev.preventDefault();
   const f = ev.target;
@@ -440,6 +464,7 @@ function toggleTheme() {
 
 $("#theme-btn").addEventListener("click", toggleTheme);
 $("#run-btn").addEventListener("click", runBatch);
+$("#ingest-btn").addEventListener("click", ingestDemand);
 $("#add-form").addEventListener("submit", addSituation);
 $("#add-toggle").addEventListener("click", () => $("#add-form").classList.toggle("hidden"));
 $("#export-btn").addEventListener("click", () => { window.location.href = "/api/decisions.csv"; });

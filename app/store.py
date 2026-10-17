@@ -166,6 +166,15 @@ class Store:
             self._persist_product(pid)
             return self._inv[pid]
 
+    def update_forecast(self, pid: str, forecast: float) -> Optional[dict]:
+        """Apply a new demand forecast from an ingested signal."""
+        with self._lock:
+            if pid not in self._inv:
+                return None
+            self._inv[pid]["demand_forecast"] = max(0.0, float(forecast))
+            self._persist_product(pid)
+            return self._inv[pid]
+
     def _persist_product(self, pid: str) -> None:
         if self.db and self.db.ok and pid in self._order:
             self.db.save_product(pid, self._order.index(pid), self._inv[pid])
