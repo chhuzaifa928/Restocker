@@ -46,7 +46,9 @@ rationale for each escalation — it *explains*, it does not *decide*.
 | 🔁 | **Adaptive gate** | Human rejections *raise the confidence bar* — the gate learns to be more cautious (governance only) |
 | 📡 | **Reactive ingestion** | A demand signal (external feed or mock) auto-triggers re-evaluation — new demand → decision |
 | 🔌 | **MCP server** | Drive the live service from any MCP client (e.g. Claude Desktop) |
-| 🎨 | **Polished dashboard** | Light/dark themes, scenario presets, CSV audit export, live counters & toasts |
+| 📊 | **Analytics overview** | Routing donut, budget & oversight, recent activity — the whole operation at a glance |
+| 🎛️ | **Live gate tuning** | Edit the dual-gate policy from the Settings page — no redeploy; persisted |
+| 🎨 | **Full app UI** | Sidebar navigation, five pages, a brand logo, light/dark themes, toasts |
 | 🧪 | **Tested** | `pytest` suite covering the gate, confidence math, persistence and the API |
 
 ---
@@ -152,6 +154,8 @@ RESTOCK_API_URL=https://your-app.example python mcp_server.py
 | `POST` | `/api/inventory/{id}/reorder` · `/adjust` | Evaluate at current stock · manual correction |
 | `GET`  | `/api/decisions.csv` | Download the full audit log as CSV |
 | `GET`  | `/api/presets` | Demo scenario presets (auto / escalate / block) |
+| `GET` · `POST` | `/api/settings` | Read / live-edit the dual-gate policy (persisted) |
+| `POST` | `/api/settings/reset` | Restore the default gate policy |
 | `GET`  | `/a/{id}` · `/r/{id}` | One-click Approve / Reject (used by Discord links) |
 | `GET`  | `/api/model-status` | Model / LLM / integrations / constants (diagnostics) |
 

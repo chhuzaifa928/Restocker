@@ -215,6 +215,16 @@ class Store:
                 self.db.set_meta("effective_conf_threshold", self.effective_conf_threshold)
                 self.db.set_meta("feedback_events", self.feedback_events)
 
+    def rebase_threshold(self, new_base: float) -> None:
+        """Re-base the adaptive gate when the operator changes the policy's
+        confidence threshold. Preserves any human-feedback offset above base."""
+        with self._lock:
+            offset = max(0.0, self.effective_conf_threshold - self.base_conf_threshold)
+            self.base_conf_threshold = new_base
+            self.effective_conf_threshold = min(0.90, round(new_base + offset, 4))
+            if self.db and self.db.ok:
+                self.db.set_meta("effective_conf_threshold", self.effective_conf_threshold)
+
     # ---- records ---------------------------------------------------------
     def add(self, decision: Decision) -> None:
         with self._lock:

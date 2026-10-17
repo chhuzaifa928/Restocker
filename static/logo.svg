@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="ReStock AI logo">
+  <defs>
+    <linearGradient id="rsBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="rsBar" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#a5b4fc"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="46" height="46" rx="12" fill="url(#rsBg)"/>
+  <rect x="1.5" y="1.5" width="45" height="45" rx="11.5" fill="none" stroke="#ffffff" stroke-opacity="0.18"/>
+  <!-- restock cycle arc -->
+  <path d="M35.5 16.5 A13 13 0 1 0 37 24" fill="none" stroke="#22d3ee" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M31.2 13.2 L36.2 15.8 L34 20.8 Z" fill="#22d3ee"/>
+  <!-- ascending stock bars (an up-trend) -->
+  <rect x="15" y="27" width="4.6" height="7"  rx="1.6" fill="url(#rsBar)"/>
+  <rect x="21.7" y="23" width="4.6" height="11" rx="1.6" fill="url(#rsBar)"/>
+  <rect x="28.4" y="18.5" width="4.6" height="15.5" rx="1.6" fill="#ffffff"/>
+  <!-- AI node spark -->
+  <circle cx="30.7" cy="15" r="2.4" fill="#22d3ee" stroke="#ffffff" stroke-width="1.2"/>
+</svg>

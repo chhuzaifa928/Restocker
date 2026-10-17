@@ -86,3 +86,37 @@ class Settings:
 
 
 settings = Settings()
+
+
+@dataclass
+class RuntimeConfig:
+    """Mutable copy of the dual-gate constants, editable at runtime from the
+    Settings page (the frozen Settings holds the boot-time defaults). The gate
+    reads these, so an operator can tune policy live without a redeploy."""
+    auto_limit: float
+    hard_limit: float
+    max_order_qty: int
+    conf_threshold: float
+    min_visits_familiar: int
+
+    @classmethod
+    def from_settings(cls, s: Settings) -> "RuntimeConfig":
+        return cls(
+            auto_limit=s.auto_limit,
+            hard_limit=s.hard_limit,
+            max_order_qty=s.max_order_qty,
+            conf_threshold=s.conf_threshold,
+            min_visits_familiar=s.min_visits_familiar,
+        )
+
+    def as_dict(self) -> dict:
+        return {
+            "auto_limit": self.auto_limit,
+            "hard_limit": self.hard_limit,
+            "max_order_qty": self.max_order_qty,
+            "conf_threshold": self.conf_threshold,
+            "min_visits_familiar": self.min_visits_familiar,
+        }
+
+
+runtime = RuntimeConfig.from_settings(settings)

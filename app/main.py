@@ -20,12 +20,12 @@ from fastapi.responses import FileResponse, HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
 
 from .agent import Agent
-from .config import STATIC_DIR, settings
+from .config import STATIC_DIR, runtime, settings
 from .db import DB
 from .fulfill import fulfill_order
 from .gate import ROUTE_AUTO, ROUTE_BLOCK, ROUTE_ESCALATE, evaluate
 from .llm import generate_rationale
-from .models import AdjustRequest, Decision, InventoryItem, Metrics, Situation
+from .models import AdjustRequest, Decision, GateSettings, InventoryItem, Metrics, Situation
 from .notify import notify_escalation
 from .signals import fetch_demand_signals
 from .store import Store
@@ -68,6 +68,14 @@ def _startup() -> None:
         db=db,
     )
     store.rehydrate()                 # restore any persisted decisions/budget
+    # Restore any runtime gate overrides saved from the Settings page.
+    if db and db.ok:
+        saved = db.get_meta("runtime_config")
+        if isinstance(saved, dict):
+            for k, v in saved.items():
+                if hasattr(runtime, k):
+                    setattr(runtime, k, v)
+            store.base_conf_threshold = runtime.conf_threshold
     store.seed_inventory(_read_seed())  # primes inventory only on a fresh DB
 
 
@@ -116,7 +124,7 @@ async def _process(sit: Situation, *, execute: bool = True,
     cost = round(quantity * sit.unit_price, 2)
 
     gate = evaluate(action, quantity, cost, confidence, visits, remaining,
-                    settings, conf_threshold=store.effective_conf_threshold)
+                    runtime, conf_threshold=store.effective_conf_threshold)
 
     decision = Decision(
         id=str(uuid.uuid4()),
@@ -415,14 +423,64 @@ def model_status() -> dict:
             "public_base_url": settings.public_base_url or None,
         },
         "constants": {
+            "auto_limit": runtime.auto_limit,
+            "hard_limit": runtime.hard_limit,
+            "max_order_qty": runtime.max_order_qty,
+            "conf_threshold": runtime.conf_threshold,
+            "effective_conf_threshold": store.effective_conf_threshold,
+            "min_visits_familiar": runtime.min_visits_familiar,
+        },
+    }
+
+
+@app.get("/api/settings")
+def get_settings() -> dict:
+    """Current (runtime) gate constants + their boot-time defaults."""
+    return {
+        "runtime": runtime.as_dict(),
+        "defaults": {
             "auto_limit": settings.auto_limit,
             "hard_limit": settings.hard_limit,
             "max_order_qty": settings.max_order_qty,
             "conf_threshold": settings.conf_threshold,
-            "effective_conf_threshold": store.effective_conf_threshold,
             "min_visits_familiar": settings.min_visits_familiar,
         },
+        "effective_conf_threshold": store.effective_conf_threshold,
     }
+
+
+@app.post("/api/settings")
+def update_settings(body: GateSettings) -> dict:
+    """Edit the dual-gate policy live (no redeploy). Persisted so it survives a
+    restart; the human-feedback loop re-bases on the new confidence threshold."""
+    if body.auto_limit is not None:
+        runtime.auto_limit = max(0.0, float(body.auto_limit))
+    if body.hard_limit is not None:
+        runtime.hard_limit = max(0.0, float(body.hard_limit))
+    if body.max_order_qty is not None:
+        runtime.max_order_qty = max(1, int(body.max_order_qty))
+    if body.conf_threshold is not None:
+        runtime.conf_threshold = min(1.0, max(0.0, float(body.conf_threshold)))
+        store.rebase_threshold(runtime.conf_threshold)
+    if body.min_visits_familiar is not None:
+        runtime.min_visits_familiar = max(0, int(body.min_visits_familiar))
+    if store.db and store.db.ok:
+        store.db.set_meta("runtime_config", runtime.as_dict())
+    return {"runtime": runtime.as_dict(), "effective_conf_threshold": store.effective_conf_threshold}
+
+
+@app.post("/api/settings/reset")
+def reset_settings() -> dict:
+    """Restore the boot-time gate defaults."""
+    runtime.auto_limit = settings.auto_limit
+    runtime.hard_limit = settings.hard_limit
+    runtime.max_order_qty = settings.max_order_qty
+    runtime.conf_threshold = settings.conf_threshold
+    runtime.min_visits_familiar = settings.min_visits_familiar
+    store.rebase_threshold(settings.conf_threshold)
+    if store.db and store.db.ok:
+        store.db.set_meta("runtime_config", runtime.as_dict())
+    return {"runtime": runtime.as_dict(), "effective_conf_threshold": store.effective_conf_threshold}
 
 
 # ---- one-click Approve / Reject (from a Discord/email link) --------------

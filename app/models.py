@@ -68,6 +68,16 @@ class AdjustRequest(BaseModel):
     level: Optional[float] = None   # or an absolute new level
 
 
+class GateSettings(BaseModel):
+    """Runtime edits to the dual-gate policy (Settings page). All optional."""
+
+    auto_limit: Optional[float] = Field(default=None, ge=0)
+    hard_limit: Optional[float] = Field(default=None, ge=0)
+    max_order_qty: Optional[int] = Field(default=None, ge=1)
+    conf_threshold: Optional[float] = Field(default=None, ge=0, le=1)
+    min_visits_familiar: Optional[int] = Field(default=None, ge=0)
+
+
 class Metrics(BaseModel):
     total_decisions: int
     auto_approved: int
